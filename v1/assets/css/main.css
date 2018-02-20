@@ -1,0 +1,23 @@
+/* Main CSS file for santi.com */
+
+/*
+
+	Extra Small <576px  			col
+	Small		>=576px and <768px	col-sm-
+	Medium		>=768px and <992px	col-md-
+	Large		>=992px and <1200	col-lg-
+	Extra Large	>1200px				col-xl-
+	
+
+
+*/
+
+body { font-family:Verdana, Arial, sans-serif; font-size: 12pt;}
+
+p { font-size: 1em; }
+
+.mainContainer {}
+
+.sidebarContainer{}
+
+
