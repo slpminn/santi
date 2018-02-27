@@ -4,13 +4,21 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="/v1/assets/jquery/jquery-3.2.1.slim.min.js"></script>
+    
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/v1/assets/bootstrap/4.0.0/css/bootstrap.min.css" >
-
+	
+	<!-- Custom CSS -->
 	<link rel="stylesheet" type="text/css" href="/v1/assets/css/main.css">
 	
-    <title>Hello, world!</title>
+	
+    
+	<title>Hello, world!</title>
   </head>
   <body>
     
@@ -25,7 +33,7 @@
 			
 		
 
-			<form action="/v1/processinfo/recordPersonalInformation.php" method="POST" id="processForm" name="processForm">
+			<form action="/v1/processinfo/recordPersonalInformation.php" method="POST" id="processForm" name="processForm" onsubmit="checkFields();"> 
 
 			<div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
@@ -43,7 +51,8 @@
   <div class="form-group">
     <label for="exampleSelect1">How Many Computers do you own?</label>
     <select class="form-control" name="exampleInputNumberComputers" id="exampleInputNumberComputers">
-      <option value="1">One</option>
+      <option />
+	  <option value="1" selected>One</option>
       <option value="2">Two</option>
       <option value="3">Three</option>
       <option value="4">Four</option>
@@ -53,7 +62,8 @@
   <div class="form-group">
     <label for="exampleSelect2">Select Operating System</label>
     <select multiple class="form-control" name="exampleOperatingSystem" id="exampleOperatingSystem">
-      <option value="W7" selected>Windows 7</option>
+      <option /> <!-- Created an unselected option -->
+	  <option value="W7" selected>Windows 7</option>
       <option value="W10">Windows 10</option>
       <option value="IOSEC">Mac IOS El Capitan</option>
       <option value="IOSHS">Mac IOS High Sierra</option>
@@ -62,7 +72,7 @@
   </div>
   <div class="form-group">
     <label for="exampleTextarea">Example textarea</label>
-    <textarea class="form-control" name="exampleTextarea" id="exampleTextarea" rows="5"></textarea>
+    <textarea class="form-control" name="exampleTextarea" id="exampleTextarea" rows="5">This is a text area</textarea>
   </div>
   <div class="form-group">
     <label for="exampleInputFile">File input</label>
@@ -73,13 +83,13 @@
     <legend>Radio buttons</legend>
     <div class="form-check">
       <label class="form-check-label">
-        <input type="radio" class="form-check-input" name="exampleOptionsRadios" id="optionsRadios1" value="option1" checked>
+        <input type="radio" class="form-check-input" name="exampleOptionsRadios" id="optionsRadios1" value="option1">
         Option one is this and that&mdash;be sure to include why it's great
       </label>
     </div>
     <div class="form-check">
     <label class="form-check-label">
-        <input type="radio" class="form-check-input" name="exampleOptionsRadios" id="optionsRadios2" value="option2">
+        <input type="radio" class="form-check-input" name="exampleOptionsRadios" id="optionsRadios2" value="option2" checked>
         Option two can be something else and selecting it will deselect option one
       </label>
     </div>
@@ -94,20 +104,24 @@
   <fieldset class="form-group">
   <div class="form-check">
     <label class="form-check-label">
-      <input type="checkbox" name="exampleMyOptions1" id="exampleMyOptions1" class="form-check-input" value="One">
+      <input type="checkbox" name="exampleMyOptions1" id="exampleMyOptions1" class="form-check-input" value="One" checked>
       Check me out
     </label>
   </div>
    <div class="form-check">
     <label class="form-check-label">
-      <input type="checkbox" name="exampleMyOptions2" id="exampleMyOptions2" class="form-check-input" value="true">
+      <input type="checkbox" name="exampleMyOptions2" id="exampleMyOptions2" class="form-check-input" value="true" checked>
       Delete this record
     </label>
   </div>
   </fieldset>
   
   
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>  <!--Button type submit has a default behavior of submitting the form--> 
+  
+  <button type="button" class="btn btn-warning btn-lg btn-block" onclick="history.back();">Cancel</button>
+  
+  <button type="button" class="btn btn-danger btn-sm btn-block" onclick="clearFields();">Clear fields</button>
 			</form>
 	
 		</div>
@@ -133,12 +147,13 @@
 	
 	</div>	
 	
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="/v1/assets/jquery/jquery-3.2.1.slim.min.js"></script>
-    <script src="/v1/assets/bootstrap/js/popper.min.js"></script>
+   
+    <!-- Bootstrap Javascript -->
     <script src="/v1/assets/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	
+	<!-- <script src="/v1/assets/bootstrap/4.0.0/js/popper.min.js"></script> -->
+	
+	<!-- Custom Javascript -->
 	<script type="text/javascript" src="/v1/assets/js/main.js"></script>
 	
 	
