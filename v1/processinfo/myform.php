@@ -1,3 +1,74 @@
+<?php
+
+	// load configuration file
+	require_once($_SERVER['DOCUMENT_ROOT']."\\v1\\config\\config.php");
+	// load database connection
+	require_once(APP_ROOTDIR."\\v1\\config\\pdo_db.php");
+	// load header file
+	
+	$clean_ID = cleanInput($_POST['exampleInputId']);
+	
+	$tsql = "SELECT  exampleInputEmail1, 
+						exampleInputName, 
+						exampleInputPassword1, 
+						exampleInputNumberComputers, 
+						exampleOperatingSystem, 
+						exampleTextarea, 
+						exampleOptionsRadios, 
+						exampleMyOptions2, 
+						id
+				FROM tMyFirstTable 
+				WHERE id = :id";
+	$params = array("");
+	$params[':id'] = $clean_ID;
+	$exec = $dbconn->prepare($tsql);
+	if ($exec->execute($params)) {
+		print("<h2>Select executed successfully</h2>");
+		$row = $exec->fetchAll(PDO::FETCH_ASSOC);
+		$count = count($row);
+		var_dump($row);
+		print("<h4>The number of rows returned is ".$count."</h4>"); 
+		
+		if ($count == 0) {
+			
+			$exampleInputEmail1 = "";
+			$exampleInputName = "";
+			$exampleInputPassword1 = "";
+			$exampleInputNumberComputers = 0;
+			$exampleOperatingSystem = 0;
+			
+			
+		} else {
+
+			$exampleInputEmail1 = $row[0]["exampleInputEmail1"];
+			$exampleInputName = $row[0]["exampleInputName"];
+			$exampleInputPassword1 = $row[0]["exampleInputPassword1"];
+			$exampleInputNumberComputers = $row[0]["exampleInputNumberComputers"];
+			$exampleOperatingSystem = explode(",",$row[0]["exampleOperatingSystem"]);	/* Use explode to convert a string into an array. 
+																							Ex	
+																							The $string = "A,B,C";
+																							When explode to $array results in
+																								$array[0] = "A";
+																								$array[1] = "B";
+																								$array[2] = "C";
+																						*/
+		}
+		
+		
+	} else { 
+		print("<h2>Select not executed successfully</h2>");
+		exit();
+	}
+	
+try {
+	
+} catch(Exception $e) {
+	$dbconn->rollback();					//Rollback.	Undoes the changes to the Database.
+	print("<h2>".$e->getMessage()."</h2>");
+	print("<h2>ERR0001 -  Unable to process the request. Contact your administrator.</h2>");
+}		
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -30,44 +101,41 @@
 		
 			<h1>Hello, world!</h1>
 
-			
-		
-
 			<form action="/v1/processinfo/recordPersonalInformation.php" method="POST" id="processForm" name="processForm" onsubmit="checkFields();"> 
 
 			<div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" name="exampleInputEmail1" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" value="b@b.com">
+    <input type="email" class="form-control" name="exampleInputEmail1" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" value="<?php echo $exampleInputEmail1; ?>">
     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
   </div>
 		<div class="form-group">
     <label for="exampleInputName">Name</label>
-    <input type="text" class="form-control" name="exampleInputName" id="exampleInputName" placeholder="Name" value="Santi">
+    <input type="text" class="form-control" name="exampleInputName" id="exampleInputName" placeholder="Name" value="<?php echo $exampleInputName; ?>">
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" name="exampleInputPassword1" id="exampleInputPassword1" placeholder="Password" value="gbierfgbf">
+    <input type="password" class="form-control" name="exampleInputPassword1" id="exampleInputPassword1" placeholder="Password" value="<?php echo $exampleInputPassword1; ?>">
   </div>
   <div class="form-group">
     <label for="exampleSelect1">How Many Computers do you own?</label>
     <select class="form-control" name="exampleInputNumberComputers" id="exampleInputNumberComputers">
       <option />
-	  <option value="1" selected>One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-      <option value="4">Four</option>
-      <option value="5">Five</option>
+	  <option value="1" <?php if ($exampleInputNumberComputers == 1) echo "selected"; ?>>One</option>
+      <option value="2" <?php if ($exampleInputNumberComputers == 2) echo "selected"; ?>>Two</option>
+      <option value="3" <?php if ($exampleInputNumberComputers == 3) echo "selected"; ?>>Three</option>
+      <option value="4" <?php if ($exampleInputNumberComputers == 4) echo "selected"; ?>>Four</option>
+      <option value="5" <?php if ($exampleInputNumberComputers == 5) echo "selected"; ?>>Five</option>
     </select>
   </div>
   <div class="form-group">
     <label for="exampleSelect2">Select Operating System</label>
-    <select multiple class="form-control" name="exampleOperatingSystem" id="exampleOperatingSystem">
+	<select multiple class="form-control" name="exampleOperatingSystem" id="exampleOperatingSystem" size="10">
       <option /> <!-- Created an unselected option -->
-	  <option value="W7" selected>Windows 7</option>
-      <option value="W10">Windows 10</option>
-      <option value="IOSEC">Mac IOS El Capitan</option>
-      <option value="IOSHS">Mac IOS High Sierra</option>
-      <option value="LU16">Linux Ubuntu16</option>
+	  <option value="W7" <?php if (in_array("W7",$exampleOperatingSystem)) echo "selected"; ?> >Windows 7</option>
+      <option value="W10" <?php if (in_array("W10",$exampleOperatingSystem)) echo "selected"; ?> >Windows 10</option>
+      <option value="IOSEC" <?php if (in_array("IOSEC",$exampleOperatingSystem)) echo "selected"; ?> >Mac IOS El Capitan</option>
+      <option value="IOSHS" <?php if (in_array("IOSHS",$exampleOperatingSystem)) echo "selected"; ?> >Mac IOS High Sierra</option>
+      <option value="LU16" <?php if (in_array("LU16",$exampleOperatingSystem)) echo "selected"; ?> >Linux Ubuntu16</option>
     </select>
   </div>
   <div class="form-group">

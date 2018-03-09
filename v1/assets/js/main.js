@@ -48,4 +48,53 @@ function checkFields(e){
 	return false;
 }
 
+function editInformation(){
+	console.log("editInformation");
+	
+	$("#processForm").submit();
+	
+}
 //alert(w);
+
+function checkLoginFields(e){
+	console.log("exec: checkLoginFields");
+	
+	$("#user").removeClass("errorField");
+	
+	$("#password").removeClass("errorField");
+	
+	var valueOfUser = $("#user").val();
+	
+	var valueOfPassword = $("#password").val();
+		
+	var msg = "";
+	
+	if (valueOfUser == "") {
+		
+		msg = msg + "The User is a Required Field\n";
+		
+		$("#user").addClass("errorField");
+		
+	}
+	
+	if (valueOfPassword == "") {
+		
+		msg = msg + "The Password is a Required Field\n";
+		
+		$("#password").addClass("errorField");
+		
+	}
+
+	if (msg != "") {
+		
+		msg = "The Following Errors Were Found:\n\n" + msg;
+		
+		alert(msg);
+
+	} else {
+		
+		$("#loginForm").submit();
+		
+	}
+	
+}

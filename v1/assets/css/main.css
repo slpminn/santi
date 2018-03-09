@@ -20,4 +20,24 @@ p { font-size: 1em; }
 
 .sidebarContainer{}
 
+.applicationTitle{
+	font-size: 4em; 
+	text-align: center;
+}
 
+.applicationTitleSmall{
+	font-size: 3em; 
+	text-align: center;
+}
+
+.colorRed{
+	color: #f44259;
+}
+
+.boldText{
+	font-weight: bold;
+}
+
+.errorField{
+	border-color: #f44259;
+}
