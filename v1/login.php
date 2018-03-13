@@ -21,21 +21,21 @@
   </header>
 	<body>
 	
-		<div class="container-fluid">
+		<div class="container-fluid"> <!-- In this case this gives a border between the edge of the page and the username, password, and button. Defines div as a bootstrap container. -->
 		
-			<div class="row">
+			<div class="row"> <!-- Defines everything below as being one row -->
 				
-				<div class="col mainContainer">
+				<div class="col mainContainer"> <!-- This determines how much of the page we want filled up by the form -->
 		
-					<form action="/v1/processinfo/authorize.php" method="POST" id="loginForm" name="loginForm">
+					<form action="/v1/secure/authorize.php" method="POST" id="loginForm" name="loginForm"> <!-- This defines the form, tells where to submit the form -->
 					
-						<h1 class="applicationTitle">Household Asset Tracking</h1>
+						<h1 class="applicationTitle">Household Asset Tracking</h1> <!-- Applies the class defined in CSS to the h1 -->
 						
-						<h2 class="applicationTitleSmall colorRed boldText">Developed By Santi</h2>
+						<h2 class="applicationTitleSmall colorRed boldText">Developed By Santi</h2> <!-- Applies the class defined in CSS to the h2 -->
 						
 						<div class = "form-group">
-							<label for = "user" class="boldText">Username</br></label>
-							<input type="text" class="form-control" name="user" id="user" placeholder="Enter Username">
+							<label for = "username" class="boldText">Username</br></label>
+							<input type="text" class="form-control" name="username" id="username" placeholder="Enter Username">
 						</div>
 						
 						<div class = "form-group">
@@ -45,13 +45,13 @@
 						
 						</br>
 						
-						<button type="button" class="btn btn-primary btn-lg btn-block" onClick="checkLoginFields(event);">Login</button>
+						<button type="button" class="btn btn-primary btn-lg btn-block" onClick="checkLoginFields(event);">Login</button> <!-- When you hit the login button, run the checkLoginFields function -->
 
 					</form>
 				
 				</div> <!-- End of div mainContainer -->
 			
-			</div> <!-- End of row -->
+			 </div><!-- End of row -->
 		
 		</div> <!-- End of container-fluid -->
 	

@@ -56,44 +56,45 @@ function editInformation(){
 }
 //alert(w);
 
-function checkLoginFields(e){
-	console.log("exec: checkLoginFields");
+function checkLoginFields(e){	//function to check if the user and password are entered
+	console.log("exec: checkLoginFields");	//Printing to the console that the function is being executed
+
 	
-	$("#user").removeClass("errorField");
+	$("#user").removeClass("errorField");	//This removes the CSS class from the username field 
 	
-	$("#password").removeClass("errorField");
+	$("#password").removeClass("errorField"); //This removes the CSS class from the password field
 	
-	var valueOfUser = $("#user").val();
+	var valueOfUser = $("#user").val(); //This variable is assigned to the value of the element "user"
 	
-	var valueOfPassword = $("#password").val();
+	var valueOfPassword = $("#password").val(); //This variable is assigned to the value of the element "password"
 		
-	var msg = "";
+	var msg = ""; //We created this variable which will be displayed in an alert message
 	
-	if (valueOfUser == "") {
+	if (valueOfUser == "") { //If nothing is entered for the username...
 		
-		msg = msg + "The User is a Required Field\n";
+		msg = msg + "The User is a Required Field\n"; //Add this string of text to the variable msg
 		
-		$("#user").addClass("errorField");
+		$("#user").addClass("errorField"); //And add the class from css
 		
 	}
 	
-	if (valueOfPassword == "") {
+	if (valueOfPassword == "") { //If nothing is entered for the password...
 		
-		msg = msg + "The Password is a Required Field\n";
+		msg = msg + "The Password is a Required Field\n"; //Add this string of text to the variable msg
 		
-		$("#password").addClass("errorField");
+		$("#password").addClass("errorField"); //And add the class from css
 		
 	}
 
-	if (msg != "") {
+	if (msg != "") {  //If the value is not blank for msg...
 		
-		msg = "The Following Errors Were Found:\n\n" + msg;
+		msg = "The Following Errors Were Found:\n\n" + msg; //Add this string of text to the variable msg
 		
-		alert(msg);
+		alert(msg); //And print this alert message
 
 	} else {
 		
-		$("#loginForm").submit();
+		$("#loginForm").submit(); //Submit the form if the the username and password are filled out
 		
 	}
 	
