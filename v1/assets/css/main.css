@@ -41,3 +41,11 @@ p { font-size: 1em; }
 .errorField{
 	border-color: #f44259;
 }
+
+.leftMargin10{
+	margin-left: 10px;
+}
+
+.leftMargin5{
+	margin-left: 5px;
+}

@@ -99,3 +99,12 @@ function checkLoginFields(e){	//function to check if the user and password are e
 	}
 	
 }
+
+function editUser(e,id){
+	console.log("exec: editUser");
+	
+	$("#userId").val(id);
+	
+	$("#editForm").submit();
+	
+}

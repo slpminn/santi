@@ -3,7 +3,7 @@
 	// load configuration file
 	require_once($_SERVER['DOCUMENT_ROOT']."\\v1\\config\\config.php");
 	// load database connection
-	require_once(APP_ROOTDIR."\\v1\\config\\pdo_db.php");
+	require_once(APP_ROOTDIR."\\v1\\config\\pdo_db.php"); //Defines $dbconn as the connection to the database
 	// load header file
 
 		########## Put php Code Here ###########
