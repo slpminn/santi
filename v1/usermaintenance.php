@@ -8,6 +8,8 @@
 
 try {	
 	
+	$pageTitle = "User Maintenance"; //Page title to use on the header.php
+	
 	$clean_userId = cleanInput($_POST['userId']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
 	
 	$tsql = "SELECT * FROM usertbl WHERE id=:userIdPlaceHolder"; //Building an SQL statement a.k.a query. We are selecting columns from a table and filtering by id.
@@ -20,7 +22,7 @@ try {
 	
 	if ($exec->execute($params)) { //Executing the statement and passing the array with the values for the filters placeholders.
 		
-		print("<h2>Select executed successfully</h2>");
+		//print("<h2>Select executed successfully</h2>");
 		
 		$rows = $exec->fetchAll(PDO::FETCH_ASSOC); //Created an array and stores the information retrieved by executing the SQL statement.
 		
@@ -47,25 +49,13 @@ try {
 
 <!doctype html>
 <html lang="en">
-  <header>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
-	<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="/v1/assets/jquery/jquery-3.2.1.slim.min.js"></script>
-    
-	<!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/v1/assets/bootstrap/4.0.0/css/bootstrap.min.css" >
-	
-	<!-- Custom CSS -->
-	<link rel="stylesheet" type="text/css" href="/v1/assets/css/main.css">
-	
-	<title>User Maintenance</title>
-  </header>
+  
+  <?php require_once(APP_ROOTDIR."\\v1\\config\\header.php"); //Include header?>
+  
 	<body>
 	
+		<?php require_once(APP_ROOTDIR."\\v1\\config\\navigation.php"); //Include navigation?>
+		
 		<div class="container-fluid"> <!-- In this case this gives a border between the edge of the page and the username, password, and button. Defines div as a bootstrap container. -->
 		
 			<div class="row"> <!-- Defines everything below as being one row -->
@@ -74,7 +64,7 @@ try {
 		
 					<form action="/v1/secure/authorize.php" method="POST" id="loginForm" name="loginForm"> <!-- This defines the form, tells where to submit the form -->
 						
-						<h2>User Maintenance</h2> <!-- Applies the class defined in CSS to the h2 -->
+						<h2>Setup.<?php print $pageTitle; ?></h2> <!-- Applies the class defined in CSS to the h2 -->
 						
 						<div class = "form-group">
 							
@@ -107,14 +97,8 @@ try {
 		
 		</div> <!-- End of container-fluid -->
 	
-		<!-- Bootstrap Javascript -->
-		<script src="/v1/assets/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-				
-		<!-- <script src="/v1/assets/bootstrap/4.0.0/js/popper.min.js"></script> -->
-				
-		<!-- Custom Javascript -->
-		<script type="text/javascript" src="/v1/assets/js/main.js"></script>
-	
 	</body>
+	
+	<?php require_once(APP_ROOTDIR."\\v1\\config\\footer.php"); //Include footer?>
 
 </html>

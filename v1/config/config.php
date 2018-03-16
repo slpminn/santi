@@ -3,6 +3,24 @@
 // create/read session, absolutely necessar
 session_start();
 
+if (basename($_SERVER['SCRIPT_NAME']) == "authorize.php") {
+	
+	//Allow to keep going
+	
+} else {
+	
+	// Verify that the user has logged in.
+	
+	if ( ! isset($_SESSION['userislogged']) || $_SESSION['userislogged'] != 1){
+			
+		header('Location: https://santi/v1/login.php');
+				
+		exit;
+				
+	}
+	
+}
+
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 

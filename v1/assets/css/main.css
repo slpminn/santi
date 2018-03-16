@@ -30,16 +30,44 @@ p { font-size: 1em; }
 	text-align: center;
 }
 
-.colorRed{
-	color: #f44259;
+.avatarImage{
+	width: 30px;
 }
 
 .boldText{
 	font-weight: bold;
 }
 
+.colorRed{
+	color: #f44259;
+}
+
 .errorField{
 	border-color: #f44259;
+}
+
+.topMargin10{
+	margin-top: 10px;
+}
+
+.topMargin5{
+	margin-top: 5px;
+}
+
+.rightMargin10{
+	margin-right: 10px;
+}
+
+.rightMargin5{
+	margin-right: 5px;
+}
+
+.bottomMargin5 {
+	margin-bottom: 5px;
+}
+
+.bottomMargin10 {
+	margin-bottom: 10px;
 }
 
 .leftMargin10{
@@ -49,3 +77,4 @@ p { font-size: 1em; }
 .leftMargin5{
 	margin-left: 5px;
 }
+

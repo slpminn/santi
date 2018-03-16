@@ -6,15 +6,28 @@
 	require_once(APP_ROOTDIR."\\v1\\config\\pdo_db.php");
 	// load header file
 
-		var_dump ($_SESSION);
+	$pageTitle = "Main Menu"; //Page title to use on the header.php
+		
+	$tsql = "SELECT  firstname
+				FROM usertbl 
+				WHERE id = :id"; //:id and :password are placeholders
 	
-		if ( ! isset($_SESSION['userislogged']) || $_SESSION['userislogged'] != 1){
-			
-			header('Location: https://santi/v1/login.php');
-			
-			exit;
-			
-		}
+	$params = array(""); //Created an array and assigned it to a variable to store the values of the placeholders in the select statement
+	
+	$params[':id'] = $_SESSION['userid']; //Assigned the element index (:username) to the value of the variable $clean_username
+	
+	$exec = $dbconn->prepare($tsql); //Prepare tells php which statement we're going to execute before we execute it to prevent sql injection attacks
+	
+	if ($exec->execute($params)) { //Executing the statement and passing the array with the values for the placeholder		
+	
+		$row = $exec->fetchAll(PDO::FETCH_ASSOC); //Created a variable and stores the information retrieved by executing the sql statement	
+	
+	} else {
+
+		print("<h2>ERROR.0010.Unable to complete request. Please contact your administrator.</h2>");
+		exit();
+	}
+	
 try {
 	
 } catch(Exception $e) {
@@ -26,46 +39,28 @@ try {
 
 <!doctype html>
 <html lang="en">
-  <header>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
-	<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="/v1/assets/jquery/jquery-3.2.1.slim.min.js"></script>
-    
-	<!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/v1/assets/bootstrap/4.0.0/css/bootstrap.min.css" >
-	
-	<!-- Custom CSS -->
-	<link rel="stylesheet" type="text/css" href="/v1/assets/css/main.css">
-	
-	<title>Login</title>
-  </header>
+ 
+ <?php require_once(APP_ROOTDIR."\\v1\\config\\header.php"); //Include header?>
+
 	<body>
-	
+		<?php require_once(APP_ROOTDIR."\\v1\\config\\navigation.php"); //Include navigation?>
+		
 		<div class="container-fluid">
 		
 			<div class="row">
 				
 				<div class="col mainContainer">
 		
-					########## Put Content Here ###########
+					<h2>Welcome <?php print $row[0]["firstname"]; ?>!</h2>
 				
 				</div> <!-- End of div mainContainer -->
 			
 			</div> <!-- End of row -->
 		
 		</div> <!-- End of container-fluid -->
-		
-		<!-- Bootstrap Javascript -->
-		<script src="/v1/assets/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-				
-		<!-- <script src="/v1/assets/bootstrap/4.0.0/js/popper.min.js"></script> -->
-				
-		<!-- Custom Javascript -->
-		<script type="text/javascript" src="/v1/assets/js/main.js"></script>
 				
 	</body>
+	
+	<?php require_once(APP_ROOTDIR."\\v1\\config\\footer.php"); //Include footer?>
+	
 </html>

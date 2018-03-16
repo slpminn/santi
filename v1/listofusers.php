@@ -8,12 +8,14 @@
 
 try {
 	
+	$pageTitle = "List of Users"; //Page title to use on the header.php
+	
 	$tsql = "SELECT id,username,lastname,firstname,middlename,email FROM usertbl WHERE active=:activePlaceHolder ORDER BY lastname,firstname,middlename";
 	$params = array("");
 	$params[":activePlaceHolder"] = 1; //Assigned the filter with an index of (:userId) to the value of the variable $clean_userId.
 	$exec = $dbconn->prepare($tsql);
 	if ($exec->execute($params)) {
-		print("<h2>Select executed successfully</h2>");
+		//print("<h2>Select executed successfully</h2>");
 		$rows = $exec->fetchAll(PDO::FETCH_ASSOC);
 		//var_dump($rows);
 		$count = count($rows);
@@ -22,6 +24,8 @@ try {
 		print("<h2>Select not executed successfully</h2>");
 		exit();
 	}
+	
+	
 	
 } catch(Exception $e) {
 	$dbconn->rollback();					//Rollback.	Undoes the changes to the Database.
@@ -32,24 +36,12 @@ try {
 
 <!doctype html>
 <html lang="en">
-  <header>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
-	<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="/v1/assets/jquery/jquery-3.2.1.slim.min.js"></script>
     
-	<!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/v1/assets/bootstrap/4.0.0/css/bootstrap.min.css" >
+	<?php require_once(APP_ROOTDIR."\\v1\\config\\header.php"); //Include Header?>
 	
-	<!-- Custom CSS -->
-	<link rel="stylesheet" type="text/css" href="/v1/assets/css/main.css">
-	
-	<title>List of Users</title>
-  </header>
 	<body>
+	
+		<?php require_once(APP_ROOTDIR."\\v1\\config\\navigation.php"); //Include navigation?>
 	
 		<div class="container-fluid"> <!-- In this case this gives a border between the edge of the page and the username, password, and button. Defines div as a bootstrap container. -->
 		
@@ -57,7 +49,7 @@ try {
 				
 				<div class="col mainContainer"> <!-- This determines how much of the page we want filled up by the form -->
 		
-					<h2>List of Users</h2> <!-- Applies the class defined in CSS to the h1 -->
+					<h2>Setup.<?php print $pageTitle; ?></h2> <!-- Applies the class defined in CSS to the h1 -->
 					
 					<form action="/v1/usermaintenance.php" method="POST" id="editForm" name="editForm" class=""> <!-- This defines the form, tells where to submit the form -->
 						
@@ -93,14 +85,8 @@ try {
 		
 		</div> <!-- End of container-fluid -->
 	
-		<!-- Bootstrap Javascript -->
-		<script src="/v1/assets/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-				
-		<!-- <script src="/v1/assets/bootstrap/4.0.0/js/popper.min.js"></script> -->
-				
-		<!-- Custom Javascript -->
-		<script type="text/javascript" src="/v1/assets/js/main.js"></script>
-	
 	</body>
+	
+	<?php require_once(APP_ROOTDIR."\\v1\\config\\footer.php"); //Include Footer?>
 
 </html>
