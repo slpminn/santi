@@ -10,7 +10,7 @@ try {
 	
 	$pageTitle = "List of Users"; //Page title to use on the header.php
 	
-	$tsql = "SELECT id,username,lastname,firstname,middlename,email FROM usertbl WHERE active=:activePlaceHolder ORDER BY lastname,firstname,middlename";
+	$tsql = "SELECT id,username,lastname,firstname,middlename,email FROM usertbl WHERE active=:activePlaceHolder ORDER BY lastname,firstname,middlename"; //We use ORDER BY because we are retrieving more than one record
 	$params = array("");
 	$params[":activePlaceHolder"] = 1; //Assigned the filter with an index of (:userId) to the value of the variable $clean_userId.
 	$exec = $dbconn->prepare($tsql);
@@ -49,7 +49,7 @@ try {
 				
 				<div class="col mainContainer"> <!-- This determines how much of the page we want filled up by the form -->
 		
-					<h2>Setup.<?php print $pageTitle; ?></h2> <!-- Applies the class defined in CSS to the h1 -->
+					<h2>Setup.Users.<?php print $pageTitle; ?></h2> <!-- Applies the class defined in CSS to the h1 -->
 					
 					<form action="/v1/usermaintenance.php" method="POST" id="editForm" name="editForm" class=""> <!-- This defines the form, tells where to submit the form -->
 						

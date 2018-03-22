@@ -12,8 +12,19 @@ try {
 	
 	$clean_userId = cleanInput($_POST['userId']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
 	
-	$tsql = "SELECT * FROM usertbl WHERE id=:userIdPlaceHolder"; //Building an SQL statement a.k.a query. We are selecting columns from a table and filtering by id.
-	
+	$tsql = "SELECT username
+      ,password
+      ,lastname
+      ,firstname
+      ,middlename
+      ,email
+      ,blocked
+      ,tries
+      ,salt
+      ,active
+      ,id FROM usertbl WITH(NOLOCK) WHERE id=:userIdPlaceHolder"; /*Building an SQL statement a.k.a query. We are selecting columns from a table and filtering by id.
+																	We do not need an ORDER BY because we are only retrieving one record		*/
+														
 	$params = array(""); //Building and array with the values to filter the results from the SQL statement.
 	
 	$params[':userIdPlaceHolder'] = $clean_userId; //Assigned the filter with an index of (:userId) to the value of the variable $clean_userId.
@@ -60,34 +71,81 @@ try {
 		
 			<div class="row"> <!-- Defines everything below as being one row -->
 				
-				<div class="col-5 mainContainer"> <!-- This determines how much of the page we want filled up by the form -->
+				<div class="col-12 mainContainer"> <!-- This determines how much of the page we want filled up by the form -->
 		
 					<form action="/v1/secure/authorize.php" method="POST" id="loginForm" name="loginForm"> <!-- This defines the form, tells where to submit the form -->
 						
-						<h2>Setup.<?php print $pageTitle; ?></h2> <!-- Applies the class defined in CSS to the h2 -->
+						<h2>Setup.Users.<?php print $pageTitle; ?></h2> <!-- Applies the class defined in CSS to the h2 -->
 						
-						<div class = "form-group">
+						<div class="row form-group">
 							
-							<label for = "username" class="boldText">Username</label>
+							<label for="username" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Username</label>
 							
-							<input type="text" class="form-control" name="username" id="username" value="<?php echo $rows[0]["username"]; ?>"> <!--Since we are not looping, because we only retrieve one record, 
-																																				we need to specify the row to retrieve as 0 because it's the first and only one--> 
+							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="username" id="username" value="<?php echo $rows[0]["username"]; ?>"> <!--Since we are not looping, because we only retrieve one record, 																																we need to specify the row to retrieve as 0 because it's the first and only one--> 
+						
+						</div>
+							
+						<div class="row form-group">
+							
+							<label for="lastname" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Last Name</label>
+							
+							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="lastname" id="lastname" value="<?php echo $rows[0]["lastname"]; ?>">
+						
+						</div>
+
+						<div class="row form-group">
+							
+							<label for="firstname" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">First Name</label>
+							
+							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="firstname" id="firstname" value="<?php echo $rows[0]["firstname"]; ?>"> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
 						
 						</div>
 						
-						<div class = "form-group">
+						<div class="row form-group">
 							
-							<label for = "lastname" class="boldText">Last Name</label>
+							<label for="middlename" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Middle Name</label>
 							
-							<input type="text" class="form-control" name="lastname" id="lastname" value="<?php echo $rows[0]["lastname"]; ?>">
+							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="middlename" id="middlename" value="<?php echo $rows[0]["middlename"]; ?>"> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
 						
-						</div>						
+						</div>
 						
+						<div class="row form-group">
+							
+							<label for="email" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Email</label>
+							
+							<input type="email" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="email" id="email" value="<?php echo $rows[0]["email"]; ?>"> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
+						
+						</div>
+						
+						<div class="row form-group">
+						
+							<label for="blocked" class="col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Blocked</label>
+								
+							<input type="checkbox" class="col-1 " name="blocked" id="blocked" value="1" <?php if($rows[0]["blocked"]==1) echo "checked";?>>
+		  
+						</div>
+						
+						<div class="row form-group">
+							
+							<label for="tries" class="col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Tries</label>
+							
+							<input type="tries" class="col-1 form-control" name="tries" id="tries" value="<?php echo $rows[0]["tries"]; ?>" disabled> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
+						
+						</div>
+						
+						<div class="row form-group">
+						
+							<label for="active" class="col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Active</label>
+								
+							<input type="checkbox" class="col-1 " name="active" id="active" value="1" <?php if($rows[0]["active"]==1) echo "checked";?>>
+		  
+						</div>
+				
 						</br>
 						
 						<button type="button" class="btn btn-danger btn-sm" onClick="checkLoginFields(event);">Cancel</button>
 						
-						<button type="button" class="btn btn-primary btn-sm" onClick="checkLoginFields(event);">Password</button> <!-- When you hit the login button, run the checkLoginFields function -->
+						<button type="button" class="btn btn-primary btn-sm" onClick="checkLoginFields(event);">Save</button> <!-- When you hit the login button, run the checkLoginFields function -->
 
 					</form>
 				

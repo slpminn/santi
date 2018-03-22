@@ -36,6 +36,7 @@
 			<div class="dropdown-menu" aria-labelledby="profileDropdown">
 			  <a class="dropdown-item" href="/v1/listofusers.php">Change Password</a>
 			  <a class="dropdown-item" href="#">Change Name</a>
+			  <a class="dropdown-item" href="#">Change Avatar</a>
 			</div>
 		  </li>
 	  </ul>
