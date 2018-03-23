@@ -51,7 +51,7 @@ try {
 		
 					<h2>Setup.Users.<?php print $pageTitle; ?></h2> <!-- Applies the class defined in CSS to the h1 -->
 					
-					<form action="/v1/usermaintenance.php" method="POST" id="editForm" name="editForm" class=""> <!-- This defines the form, tells where to submit the form -->
+					<form action="/v1/setup/users/usermaintenance.php" method="POST" id="editForm" name="editForm" class=""> <!-- This defines the form, tells where to submit the form -->
 						
 						<?php
 						

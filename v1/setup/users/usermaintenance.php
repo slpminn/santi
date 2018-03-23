@@ -73,13 +73,13 @@ try {
 				
 				<div class="col-12 mainContainer"> <!-- This determines how much of the page we want filled up by the form -->
 		
-					<form action="/v1/secure/authorize.php" method="POST" id="loginForm" name="loginForm"> <!-- This defines the form, tells where to submit the form -->
+					<form action="maintainuser.php" method="POST" id="userForm" name="userForm"> <!-- This defines the form, tells where to submit the form -->
 						
 						<h2>Setup.Users.<?php print $pageTitle; ?></h2> <!-- Applies the class defined in CSS to the h2 -->
 						
 						<div class="row form-group">
 							
-							<label for="username" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Username</label>
+							<label for="username" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Username *</label>
 							
 							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="username" id="username" value="<?php echo $rows[0]["username"]; ?>"> <!--Since we are not looping, because we only retrieve one record, 																																we need to specify the row to retrieve as 0 because it's the first and only one--> 
 						
@@ -87,7 +87,7 @@ try {
 							
 						<div class="row form-group">
 							
-							<label for="lastname" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Last Name</label>
+							<label for="lastname" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Last Name *</label>
 							
 							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="lastname" id="lastname" value="<?php echo $rows[0]["lastname"]; ?>">
 						
@@ -95,7 +95,7 @@ try {
 
 						<div class="row form-group">
 							
-							<label for="firstname" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">First Name</label>
+							<label for="firstname" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">First Name *</label>
 							
 							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="firstname" id="firstname" value="<?php echo $rows[0]["firstname"]; ?>"> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
 						
@@ -111,7 +111,7 @@ try {
 						
 						<div class="row form-group">
 							
-							<label for="email" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Email</label>
+							<label for="email" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Email *</label>
 							
 							<input type="email" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="email" id="email" value="<?php echo $rows[0]["email"]; ?>"> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
 						
@@ -121,7 +121,7 @@ try {
 						
 							<label for="blocked" class="col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Blocked</label>
 								
-							<input type="checkbox" class="col-1 " name="blocked" id="blocked" value="1" <?php if($rows[0]["blocked"]==1) echo "checked";?>>
+							<input type="checkbox" class="col-1 bigCheckbox" name="blocked" id="blocked" value="1" <?php if($rows[0]["blocked"]==1) echo "checked";?> onClick="blockedOnClick();">
 		  
 						</div>
 						
@@ -137,16 +137,16 @@ try {
 						
 							<label for="active" class="col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Active</label>
 								
-							<input type="checkbox" class="col-1 " name="active" id="active" value="1" <?php if($rows[0]["active"]==1) echo "checked";?>>
+							<input type="checkbox" class="col-1 bigCheckbox" name="active" id="active" value="1" <?php if($rows[0]["active"]==1) echo "checked";?> onClick="activeOnClick();">
 		  
 						</div>
 				
 						</br>
 						
-						<button type="button" class="btn btn-danger btn-sm" onClick="checkLoginFields(event);">Cancel</button>
+						<button type="button" class="btn btn-danger btn-sm" onClick="backToMain();">Cancel</button>
 						
-						<button type="button" class="btn btn-primary btn-sm" onClick="checkLoginFields(event);">Save</button> <!-- When you hit the login button, run the checkLoginFields function -->
-
+						<button type="button" class="btn btn-success btn-sm leftMargin25" onClick="validateFieldsForm();">Save</button> <!-- When you hit the login button, run the checkLoginFields function -->
+						
 					</form>
 				
 				</div> <!-- End of div mainContainer -->

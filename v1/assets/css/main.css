@@ -54,12 +54,20 @@ p { font-size: 1em; }
 	margin-top: 5px;
 }
 
+.topMargin0{
+	margin-top: 0px;
+}
+
 .rightMargin10{
 	margin-right: 10px;
 }
 
 .rightMargin5{
 	margin-right: 5px;
+}
+
+.rightMargin0{
+	margin-right: 0px;
 }
 
 .bottomMargin5 {
@@ -70,11 +78,30 @@ p { font-size: 1em; }
 	margin-bottom: 10px;
 }
 
-.leftMargin10{
-	margin-left: 10px;
+.bottomMargin0 {
+	margin-bottom: 0px;
 }
 
-.leftMargin5{
+.leftMargin25 {
+	margin-left: 25px;
+}
+
+.leftMargin10 {
+	margin-left: 10px;
+}
+ 
+.leftMargin5 {
 	margin-left: 5px;
 }
 
+.leftMargin0 {
+	margin-left: 0px;
+}
+
+.bigCheckbox, .bigRadio {
+	width: 30px; height: 30px;
+}
+
+.leftAlign {
+	text-align: left;	
+}
