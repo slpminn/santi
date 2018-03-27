@@ -100,10 +100,10 @@ function checkLoginFields(e){	//function to check if the user and password are e
 	
 }
 
-function editUser(e,id){
-	console.log("exec: editUser");
+function edit(e,id){
+	console.log("exec: edit");
 	
-	$("#userId").val(id);
+	$("#id").val(id);
 	
 	$("#editForm").submit();
 	

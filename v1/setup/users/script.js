@@ -65,7 +65,7 @@ function validateFieldsForm(){	//function to check if the user and password are 
 
 	} else {
 		
-		$("#userForm").submit(); //Submit the form if the the username and password are filled out
+		$("#editForm").submit(); //Submit the form if the the username and password are filled out
 		
 	}
 	
@@ -75,7 +75,7 @@ function backToMain() {
 	
 	if(debug) console.log("exec: backToMain");
 	
-	location.href="listofusers.php"; //The location function sends us back to the specified page
+	location.href="main.php"; //The location function sends us back to the specified page
 	
 	
 }

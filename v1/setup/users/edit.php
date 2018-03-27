@@ -8,9 +8,9 @@
 
 try {	
 	
-	$pageTitle = "User Maintenance"; //Page title to use on the header.php
+	$pageTitle = "Edit"; //Page title to use on the header.php
 	
-	$clean_userId = cleanInput($_POST['userId']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
+	$param_id = cleanInput($_POST['id']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
 	
 	$tsql = "SELECT username
       ,password
@@ -27,7 +27,7 @@ try {
 														
 	$params = array(""); //Building and array with the values to filter the results from the SQL statement.
 	
-	$params[':userIdPlaceHolder'] = $clean_userId; //Assigned the filter with an index of (:userId) to the value of the variable $clean_userId.
+	$params[':userIdPlaceHolder'] = $param_id; //Assigned the filter with an index of (:userId) to the value of the variable $param_id.
 	
 	$exec = $dbconn->prepare($tsql); //Prepare tells php which statement we're going to execute before we execute it to prevent SQL injection attacks.
 	
@@ -43,6 +43,30 @@ try {
 		
 		// print("<h4>The number of rows returned is ".$count."</h4>"); 
 	
+		if ($param_id == 0) {  //Adding a new record
+			
+			 $username = "";
+			 $lastname = "";
+			 $firstname = "";
+			 $middlename = "";
+			 $email = "";
+			 $blocked = 0;
+			 $tries = 0;
+			 $active = 1;
+	  
+		} else { //Editing a user
+			
+			 $username = $rows[0]["username"];
+			 $lastname = $rows[0]["lastname"];
+			 $firstname = $rows[0]["firstname"];
+			 $middlename = $rows[0]["middlename"];
+			 $email = $rows[0]["email"];
+			 $blocked = $rows[0]["blocked"];
+			 $tries = $rows[0]["tries"];
+			 $active = $rows[0]["active"];
+			 
+		}
+		
 	} else { 
 	
 		print("<h2>Select not executed successfully</h2>");
@@ -73,7 +97,7 @@ try {
 				
 				<div class="col-12 mainContainer"> <!-- This determines how much of the page we want filled up by the form -->
 		
-					<form action="maintainuser.php" method="POST" id="userForm" name="userForm"> <!-- This defines the form, tells where to submit the form -->
+					<form action="maintain.php" method="POST" id="editForm" name="editForm"> <!-- This defines the form, tells where to submit the form -->
 						
 						<h2>Setup.Users.<?php print $pageTitle; ?></h2> <!-- Applies the class defined in CSS to the h2 -->
 						
@@ -81,7 +105,7 @@ try {
 							
 							<label for="username" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Username *</label>
 							
-							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="username" id="username" value="<?php echo $rows[0]["username"]; ?>"> <!--Since we are not looping, because we only retrieve one record, 																																we need to specify the row to retrieve as 0 because it's the first and only one--> 
+							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="username" id="username" value="<?php echo $username; ?>"> <!--Since we are not looping, because we only retrieve one record, 																																we need to specify the row to retrieve as 0 because it's the first and only one--> 
 						
 						</div>
 							
@@ -89,7 +113,7 @@ try {
 							
 							<label for="lastname" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Last Name *</label>
 							
-							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="lastname" id="lastname" value="<?php echo $rows[0]["lastname"]; ?>">
+							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="lastname" id="lastname" value="<?php echo $lastname; ?>">
 						
 						</div>
 
@@ -97,7 +121,7 @@ try {
 							
 							<label for="firstname" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">First Name *</label>
 							
-							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="firstname" id="firstname" value="<?php echo $rows[0]["firstname"]; ?>"> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
+							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="firstname" id="firstname" value="<?php echo $firstname; ?>"> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
 						
 						</div>
 						
@@ -105,7 +129,7 @@ try {
 							
 							<label for="middlename" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Middle Name</label>
 							
-							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="middlename" id="middlename" value="<?php echo $rows[0]["middlename"]; ?>"> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
+							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="middlename" id="middlename" value="<?php echo $middlename; ?>"> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
 						
 						</div>
 						
@@ -113,7 +137,7 @@ try {
 							
 							<label for="email" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Email *</label>
 							
-							<input type="email" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="email" id="email" value="<?php echo $rows[0]["email"]; ?>"> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
+							<input type="email" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="email" id="email" value="<?php echo $email; ?>"> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
 						
 						</div>
 						
@@ -121,7 +145,7 @@ try {
 						
 							<label for="blocked" class="col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Blocked</label>
 								
-							<input type="checkbox" class="col-1 bigCheckbox" name="blocked" id="blocked" value="1" <?php if($rows[0]["blocked"]==1) echo "checked";?> onClick="blockedOnClick();">
+							<input type="checkbox" class="col-1 bigCheckbox" name="blocked" id="blocked" value="1" <?php if($blocked==1) echo "checked";?> onClick="blockedOnClick();">
 		  
 						</div>
 						
@@ -129,7 +153,7 @@ try {
 							
 							<label for="tries" class="col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Tries</label>
 							
-							<input type="tries" class="col-1 form-control" name="tries" id="tries" value="<?php echo $rows[0]["tries"]; ?>" disabled> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
+							<input type="tries" class="col-1 form-control" name="tries" id="tries" value="<?php echo $tries; ?>" disabled> <!--Since we are not looping, because we only retrieve one record, 																												we need to specify the row to retrieve as 0 because it's the first and only one--> 
 						
 						</div>
 						
@@ -137,11 +161,13 @@ try {
 						
 							<label for="active" class="col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Active</label>
 								
-							<input type="checkbox" class="col-1 bigCheckbox" name="active" id="active" value="1" <?php if($rows[0]["active"]==1) echo "checked";?> onClick="activeOnClick();">
+							<input type="checkbox" class="col-1 bigCheckbox" name="active" id="active" value="1" <?php if($active==1) echo "checked";?> onClick="activeOnClick();">
 		  
 						</div>
 				
 						</br>
+						
+						<input type="hidden" value="<?php echo $param_id; ?>" id="id" name="id">
 						
 						<button type="button" class="btn btn-danger btn-sm" onClick="backToMain();">Cancel</button>
 						

@@ -8,11 +8,10 @@
 
 try {
 	
-	$pageTitle = "List of Users"; //Page title to use on the header.php
+	$pageTitle = "Main"; //Page title to use on the header.php
 	
-	$tsql = "SELECT id,username,lastname,firstname,middlename,email FROM usertbl WHERE active=:activePlaceHolder ORDER BY lastname,firstname,middlename"; //We use ORDER BY because we are retrieving more than one record
+	$tsql = "SELECT id,username,lastname,firstname,middlename,email,active FROM usertbl ORDER BY active desc,lastname,firstname,middlename"; //We use ORDER BY because we are retrieving more than one record
 	$params = array("");
-	$params[":activePlaceHolder"] = 1; //Assigned the filter with an index of (:userId) to the value of the variable $clean_userId.
 	$exec = $dbconn->prepare($tsql);
 	if ($exec->execute($params)) {
 		//print("<h2>Select executed successfully</h2>");
@@ -51,19 +50,27 @@ try {
 		
 					<h2>Setup.Users.<?php print $pageTitle; ?></h2> <!-- Applies the class defined in CSS to the h1 -->
 					
-					<form action="/v1/setup/users/usermaintenance.php" method="POST" id="editForm" name="editForm" class=""> <!-- This defines the form, tells where to submit the form -->
+					<form action="/v1/setup/users/edit.php" method="POST" id="editForm" name="editForm" class=""> <!-- This defines the form, tells where to submit the form -->
 						
 						<?php
+
+						echo "<div class=\"row form-group\">";
+						echo "<input type=\"text\" class=\"col-3 col-sm-2 form-control leftMargin5 recordHeader\" value=\"Last Name\" disabled>"; //Header
+						echo "<input type=\"text\" class=\"col-3 col-sm-2 form-control leftMargin5 recordHeader\" value=\"First Name\" disabled>";
+						echo "<input type=\"text\" class=\"col-3 col-sm-2 form-control leftMargin5 recordHeader\" value=\"Middle Name\" disabled>";
+						echo "<input type=\"text\" class=\"col-md-4 d-none d-md-block form-control leftMargin5 recordHeader\" value=\"Email\" disabled>";
+						echo "</div>";
 						
 						foreach($rows as $row) { //Looping through the $rows array which contains the results from the SQL statement executed, and assigning each row to the array $row.
 							
-							echo "<div class=\"row form-group\">";
-							echo "<input type=\"text\" class=\"col-3 col-sm-2 form-control leftMargin5\" value=\"{$row["lastname"]}\" disabled>"; //Retrieving an element from the array $row
-							echo "<input type=\"text\" class=\"col-3 col-sm-2 form-control leftMargin5\" value=\"{$row["firstname"]}\" disabled>";
-							echo "<input type=\"text\" class=\"col-3 col-sm-2 form-control leftMargin5\" value=\"{$row["middlename"]}\" disabled>";
-							echo "<input type=\"text\" class=\"col-md-4 d-none d-md-block form-control leftMargin5\" value=\"{$row["email"]}\" disabled>";
-							echo "<button type=\"button\" class=\"col-1 col-sm-1 btn btn-primary btn-md leftMargin5\" onClick=\"editUser(event,{$row["id"]});\">Edit</button>";
+							if ($row["active"] == 1) $rowClass = ""; else $rowClass = "recordInactive";
 							
+							echo "<div class=\"row form-group\">";
+							echo "<input type=\"text\" class=\"col-3 col-sm-2 form-control leftMargin5 {$rowClass}\" value=\"{$row["lastname"]}\" disabled>"; //Retrieving an element from the array $row
+							echo "<input type=\"text\" class=\"col-3 col-sm-2 form-control leftMargin5 {$rowClass}\" value=\"{$row["firstname"]}\" disabled>";
+							echo "<input type=\"text\" class=\"col-3 col-sm-2 form-control leftMargin5 {$rowClass}\" value=\"{$row["middlename"]}\" disabled>";
+							echo "<input type=\"text\" class=\"col-md-4 d-none d-md-block form-control leftMargin5 {$rowClass}\" value=\"{$row["email"]}\" disabled>";
+							echo "<button type=\"button\" class=\"col-1 col-sm-1 btn btn-primary btn-md leftMargin5\" onClick=\"edit(event,{$row["id"]});\">Edit</button>";
 							echo "</div>";
 
 						}
@@ -72,11 +79,11 @@ try {
 						
 						<div class="row">
 						
-						<button type="button" class="col col-sm-6 btn btn-primary btn-md leftMargin5" onClick="editUser(event,0);">Add New User</button>
+						<button type="button" class="col col-sm-6 btn btn-primary btn-md leftMargin5" onClick="edit(event,0);">Add New User</button>
 						
 						</div>
 						
-						<input type="hidden" value="" id="userId" name="userId">
+						<input type="hidden" value="" id="id" name="id">
 
 					</form>
 				</div> <!-- End of div mainContainer -->

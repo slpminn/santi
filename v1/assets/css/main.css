@@ -105,3 +105,15 @@ p { font-size: 1em; }
 .leftAlign {
 	text-align: left;	
 }
+
+.recordInactive {
+	background-color: #efacac !important;
+}
+
+.recordHeader {
+	background-color: #a8ecf7 !important;
+}
+
+.userBlocked {
+	background-color: #f7c994 !important;
+}
