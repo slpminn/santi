@@ -6,26 +6,34 @@
 	require_once(APP_ROOTDIR."\\v1\\config\\pdo_db.php"); //Defines $dbconn as the connection to the database
 	// load header file
 
-try {	
+//try {	
 	
 	$pageTitle = "User Maintenance"; //Page title to use on the header.php
 	
-	$params = array(""); //Building and array with the values to filter the results from the SQL statement.
+	$params = array(); //Building and array with the values to filter the results from the SQL statement.
 	
-	$params[':id']  = cleanInput($_POST['id']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
 	$params[':username']  = cleanInput($_POST['username']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
 	$params[':lastname']  = cleanInput($_POST['lastname']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
 	$params[':firstname']  = cleanInput($_POST['firstname']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
 	$params[':middlename']  = cleanInput($_POST['middlename']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
 	$params[':email']  = cleanInput($_POST['email']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
-	$params[':blocked']  = cleanInput($_POST['blocked']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
+	if (isset($_POST['blocked'])) //If the checkbox is checked on the original form, then the blocked parameter is passed and we assign it to the placeholder in the $params array
+		$params[':blocked']  = 1; //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
+	else
+		$params[':blocked'] = 0;
+		
 	$params[':tries']  = 0; //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
 	$params[':active']  = cleanInput($_POST['active']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
 	
-	if ($params[':id'] == 0) { //Insert new record to the table
+	if (cleanInput($_POST['id']) == 0) { //Insert new record to the table
+		
+		$hashedPassword = password_hash(cleanInput($_POST['password']), PASSWORD_DEFAULT);  //Hashing the password
+		
+		$params[':password']  = $hashedPassword; //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
 		
 		$tsql = "INSERT INTO usertbl
            (username
+		   ,password
            ,lastname
            ,firstname
            ,middlename
@@ -35,6 +43,7 @@ try {
            ,active)
 		VALUES
            (:username
+		   ,:password
            ,:lastname
            ,:firstname
            ,:middlename
@@ -45,6 +54,9 @@ try {
 		   
 	} else { //Update record to the table
 		
+		$params[':id']  = cleanInput($_POST['id']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
+	
+	
 		$tsql = "UPDATE usertbl
 		   SET username = :username
 			  ,lastname = :lastname
@@ -74,9 +86,9 @@ try {
 
 	}
 
-} catch(Exception $e) {
+/*} catch(Exception $e) {
 	
 	print("<h2>ERR0001 -  Unable to process the request. Contact your administrator.</h2>");
 
-}		
+}*/		
 ?>

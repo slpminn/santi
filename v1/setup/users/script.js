@@ -65,7 +65,7 @@ function validateFieldsForm(){	//function to check if the user and password are 
 
 	} else {
 		
-		$("#editForm").submit(); //Submit the form if the the username and password are filled out
+		$("#actionForm").submit(); //Submit the form if the the username and password are filled out
 		
 	}
 	

@@ -117,3 +117,7 @@ p { font-size: 1em; }
 .userBlocked {
 	background-color: #f7c994 !important;
 }
+
+.hideField{
+	display: none;
+}

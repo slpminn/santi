@@ -64,6 +64,7 @@ try {
 			 $blocked = $rows[0]["blocked"];
 			 $tries = $rows[0]["tries"];
 			 $active = $rows[0]["active"];
+			 $passwordClass = "hideField"; //Hiding the password when we edit a user
 			 
 		}
 		
@@ -97,7 +98,7 @@ try {
 				
 				<div class="col-12 mainContainer"> <!-- This determines how much of the page we want filled up by the form -->
 		
-					<form action="maintain.php" method="POST" id="editForm" name="editForm"> <!-- This defines the form, tells where to submit the form -->
+					<form action="maintain.php" method="POST" id="actionForm" name="actionForm"> <!-- This defines the form, tells where to submit the form -->
 						
 						<h2>Setup.Users.<?php print $pageTitle; ?></h2> <!-- Applies the class defined in CSS to the h2 -->
 						
@@ -106,6 +107,14 @@ try {
 							<label for="username" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Username *</label>
 							
 							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="username" id="username" value="<?php echo $username; ?>"> <!--Since we are not looping, because we only retrieve one record, 																																we need to specify the row to retrieve as 0 because it's the first and only one--> 
+						
+						</div>
+						
+						<div class="row form-group <?php echo $passwordClass;?>">
+							
+							<label for="password" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Password *</label>
+							
+							<input type="password" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="password" id="password" value=""> <!--Since we are not looping, because we only retrieve one record, 																																we need to specify the row to retrieve as 0 because it's the first and only one--> 
 						
 						</div>
 							

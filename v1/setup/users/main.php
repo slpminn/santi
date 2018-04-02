@@ -10,7 +10,7 @@ try {
 	
 	$pageTitle = "Main"; //Page title to use on the header.php
 	
-	$tsql = "SELECT id,username,lastname,firstname,middlename,email,active FROM usertbl ORDER BY active desc,lastname,firstname,middlename"; //We use ORDER BY because we are retrieving more than one record
+	$tsql = "SELECT id,username,lastname,firstname,middlename,email,active,blocked FROM usertbl ORDER BY active desc,lastname,firstname,middlename"; //We use ORDER BY because we are retrieving more than one record
 	$params = array("");
 	$exec = $dbconn->prepare($tsql);
 	if ($exec->execute($params)) {
@@ -50,7 +50,7 @@ try {
 		
 					<h2>Setup.Users.<?php print $pageTitle; ?></h2> <!-- Applies the class defined in CSS to the h1 -->
 					
-					<form action="/v1/setup/users/edit.php" method="POST" id="editForm" name="editForm" class=""> <!-- This defines the form, tells where to submit the form -->
+					<form action="/v1/setup/users/action.php" method="POST" id="mainForm" name="mainForm" class=""> <!-- This defines the form, tells where to submit the form -->
 						
 						<?php
 
@@ -63,14 +63,20 @@ try {
 						
 						foreach($rows as $row) { //Looping through the $rows array which contains the results from the SQL statement executed, and assigning each row to the array $row.
 							
-							if ($row["active"] == 1) $rowClass = ""; else $rowClass = "recordInactive";
+							if ($row["active"] == 1) { 
+							
+								$rowClass = ""; 
+								
+								if ($row["blocked"] == 1) $rowClass = "userBlocked"; 
+								
+							} else $rowClass = "recordInactive";
 							
 							echo "<div class=\"row form-group\">";
 							echo "<input type=\"text\" class=\"col-3 col-sm-2 form-control leftMargin5 {$rowClass}\" value=\"{$row["lastname"]}\" disabled>"; //Retrieving an element from the array $row
 							echo "<input type=\"text\" class=\"col-3 col-sm-2 form-control leftMargin5 {$rowClass}\" value=\"{$row["firstname"]}\" disabled>";
 							echo "<input type=\"text\" class=\"col-3 col-sm-2 form-control leftMargin5 {$rowClass}\" value=\"{$row["middlename"]}\" disabled>";
 							echo "<input type=\"text\" class=\"col-md-4 d-none d-md-block form-control leftMargin5 {$rowClass}\" value=\"{$row["email"]}\" disabled>";
-							echo "<button type=\"button\" class=\"col-1 col-sm-1 btn btn-primary btn-md leftMargin5\" onClick=\"edit(event,{$row["id"]});\">Edit</button>";
+							echo "<button type=\"button\" class=\"col-1 col-sm-1 btn btn-primary btn-md leftMargin5\" onClick=\"executeAction(event,{$row["id"]});\">Edit</button>";
 							echo "</div>";
 
 						}
@@ -79,7 +85,7 @@ try {
 						
 						<div class="row">
 						
-						<button type="button" class="col col-sm-6 btn btn-primary btn-md leftMargin5" onClick="edit(event,0);">Add New User</button>
+						<button type="button" class="col col-sm-6 btn btn-primary btn-md leftMargin5" onClick="executeAction(event,0);">Add New User</button>
 						
 						</div>
 						
