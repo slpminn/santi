@@ -9,7 +9,7 @@
 	$clean_username = cleanInput($_POST['username']);
 	$clean_password = cleanInput($_POST['password']);
 	
-	$tsql = "SELECT  id, password, tries
+	$tsql = "SELECT  id, password, tries, changepassword
 				FROM usertbl 
 				WHERE username = :username
 				AND active = :active
@@ -54,7 +54,15 @@
 			
 			$_SESSION['userislogged'] = 1; 
 			
-			header('Location: https://santi/v1/mainmenu.php');
+			if ($row[0]["changepassword"] == 0) {
+				
+				header('Location: https://santi/v1/mainmenu.php');
+				
+			} else {
+				
+				header('Location: https://santi/v1/secure/changepassword.php');
+				
+			}
 			
 			exit;
 			
