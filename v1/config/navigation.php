@@ -19,7 +19,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/v1/setup/users/main.php">Users</a>
 		  <div class="dropdown-divider"></div>
-		  <a class="dropdown-item" href="/v1/setup/levels/main.php">Levels</a>
+		  <a class="dropdown-item" href="/v1/setup/floors/main.php">Floors</a>
           <a class="dropdown-item" href="/v1/setup/rooms/main.php">Rooms</a>
           
           <a class="dropdown-item" href="#">Something else here</a>

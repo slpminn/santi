@@ -10,9 +10,11 @@ try {
 	
 	$pageTitle = "Edit"; //Page title to use on the header.php
 	
+	//var_dump($_POST);
+	
 	$param_id = cleanInput($_POST['id']); //$_POST is an array containing all the parameters that we are passing from the form with a method of POST
 	
-	$tsql = "SELECT roomdescription ,roomlevelid ,roomactive 
+	$tsql = "SELECT roomdescription ,roomfloorid ,roomactive 
 				FROM roomstbl WITH(NOLOCK) 
 				WHERE roomid=:roomIdPlaceHolder"; /*Building an SQL statement a.k.a query. We are selecting columns from a table and filtering by id.
 																	We do not need an ORDER BY because we are only retrieving one record		*/
@@ -29,7 +31,7 @@ try {
 		
 		$rows = $exec->fetchAll(PDO::FETCH_ASSOC); //Created an array and stores the information retrieved by executing the SQL statement.
 		
-		// var_dump($rows); 
+		 //var_dump($rows); echo "<hr />"; 
 		
 		$count = count($rows); //Created a variable that stores the number of rows retrieved by executing the SQL statement.
 		
@@ -38,13 +40,13 @@ try {
 		if ($param_id == 0) {  //Adding a new record
 			
 			 $roomdescription = "";
-			 $roomlevelid = "";
-			 $roomactive = "";
+			 $roomfloorid = "";
+			 $roomactive = 1;
 	  
 		} else { //Editing a record
 			
 			 $roomdescription = $rows[0]["roomdescription"];
-			 $roomlevelid = $rows[0]["roomlevelid"];
+			 $roomfloorid = $rows[0]["roomfloorid"];
 			 $roomactive = $rows[0]["roomactive"];
 			 
 		}
@@ -52,9 +54,9 @@ try {
 
 	} 
 
-	$tsql = "SELECT leveldescription, levelid 
-				FROM levelstbl WITH(NOLOCK) 
-				ORDER BY leveldescription"; /*Building an SQL statement a.k.a query. We are selecting columns from a table and filtering by id.
+	$tsql = "SELECT floordescription, floorid 
+				FROM floorstbl WITH(NOLOCK) 
+				ORDER BY floordescription"; /*Building an SQL statement a.k.a query. We are selecting columns from a table and filtering by id.
 																	We do not need an ORDER BY because we are only retrieving one record		*/
 														
 	$params = array(); //Building and array with the values to filter the results from the SQL statement.
@@ -65,13 +67,14 @@ try {
 		
 		//print("<h2>Select executed successfully</h2>");
 		
-		$allRowLevels = $exec->fetchAll(PDO::FETCH_ASSOC); //Created an array and stores the information retrieved by executing the SQL statement.
+		$allRowfloors = $exec->fetchAll(PDO::FETCH_ASSOC); //Created an array and stores the information retrieved by executing the SQL statement.
 			
-		// var_dump($rows); 
+		 //var_dump($allRowfloors); echo "<hr />";
 			
-		$countLevels = count($allRowLevels); //Created a variable that stores the number of rows retrieved by executing the SQL statement.
+		$countfloors = count($allRowfloors); //Created a variable that stores the number of rows retrieved by executing the SQL statement.
 			
 	} 
+												
 	
 	
 } catch(Exception $e) {
@@ -107,23 +110,23 @@ try {
 							<input type="text" class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="roomdescription" id="roomdescription" value="<?php echo $roomdescription; ?>"> <!--Since we are not looping, because we only retrieve one record, 																																we need to specify the row to retrieve as 0 because it's the first and only one--> 
 						
 						</div>
-							
+
 						<div class="row form-group">
 
-							<label for="roomlevelid" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">Levels *</label>
+							<label for="roomfloorid" class="col-11 col-sm-4 col-md-3 col-lg-2 col-xl-2 boldText">floors *</label>
 							
-							<select class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="roomlevelid" id="roomlevelid">
+							<select class="col-11 col-sm-7 col-md-8 col-lg-9 col-xl-9 form-control" name="roomfloorid" id="roomfloorid">
 							  
 							  <option selected />
 								
 								<?php 
 									
-									foreach($allRowLevels as $aLevel) { //Read each row of $allRowLeves one at a time and assign the current row to $aLevel. Loop for as long as there are rows in $allRowLevels.
+									foreach($allRowfloors as $afloor) { //Read each row of $allRowLeves one at a time and assign the current row to $afloor. Loop for as long as there are rows in $allRowfloors.
 										
-										if ($roomlevelid == $aLevel["levelid"]) $matchFound = "selected"; else $matchFound = ""; /* If the current row level is equal to the level assigned to the room the we want to display and select the option
+										if ($roomfloorid == $afloor["floorid"]) $matchFound = "selected"; else $matchFound = ""; /* If the current row floor is equal to the floor assigned to the room the we want to display and select the option
 																																	Otherwise, just display the option. */		
 										
-										echo "<option value=\"{$aLevel["levelid"]}\" {$matchFound}>{$aLevel["leveldescription"]}</option>";
+										echo "<option value=\"{$afloor["floorid"]}\" {$matchFound}>{$afloor["floordescription"]}</option>";
 										
 									}
 								

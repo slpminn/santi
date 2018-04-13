@@ -10,10 +10,10 @@ try {
 	
 	$pageTitle = "Main"; //Page title to use on the header.php
 	
-	$tsql = "SELECT roomid,roomdescription,leveldescription,roomactive 
+	$tsql = "SELECT roomid,roomdescription,floordescription,roomactive 
 				FROM roomstbl WITH(NOLOCK)
-				INNER JOIN levelstbl WITH(NOLOCK) ON roomstbl.roomlevelid = levelstbl.levelid
-				ORDER BY roomactive desc,roomdescription,roomlevelid"; //We use ORDER BY because we are retrieving more than one record
+				INNER JOIN floorstbl WITH(NOLOCK) ON roomstbl.roomfloorid = floorstbl.floorid
+				ORDER BY roomactive desc,roomdescription,roomfloorid"; //We use ORDER BY because we are retrieving more than one record
 	$params = array("");
 	$exec = $dbconn->prepare($tsql);
 	if ($exec->execute($params)) {
@@ -58,7 +58,7 @@ try {
 
 						echo "<div class=\"row form-group\">";
 						echo "<input type=\"text\" class=\"col-4 col-sm-3 form-control leftMargin5 recordHeader\" value=\"Room\" disabled>"; //Header
-						echo "<input type=\"text\" class=\"col-4 col-sm-3 form-control leftMargin5 recordHeader\" value=\"Level\" disabled>";
+						echo "<input type=\"text\" class=\"col-4 col-sm-3 form-control leftMargin5 recordHeader\" value=\"floor\" disabled>";
 						echo "</div>";
 						
 						foreach($rows as $row) { //Looping through the $rows array which contains the results from the SQL statement executed, and assigning each row to the array $row.
@@ -67,7 +67,7 @@ try {
 							
 							echo "<div class=\"row form-group\">";
 							echo "<input type=\"text\" class=\"col-4 col-sm-3 form-control leftMargin5 {$rowClass}\" value=\"{$row["roomdescription"]}\" disabled>"; //Retrieving an element from the array $row
-							echo "<input type=\"text\" class=\"col-4 col-sm-3 form-control leftMargin5 {$rowClass}\" value=\"{$row["leveldescription"]}\" disabled>";
+							echo "<input type=\"text\" class=\"col-4 col-sm-3 form-control leftMargin5 {$rowClass}\" value=\"{$row["floordescription"]}\" disabled>";
 							echo "<button type=\"button\" class=\"col-1 col-sm-1 btn btn-primary btn-md leftMargin5\" onClick=\"executeAction(event,{$row["roomid"]});\">Edit</button>";
 							echo "</div>";
 
